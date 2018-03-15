@@ -2,7 +2,7 @@
 
 from collections import Iterable
 import os
-
+'''
 # 切片L[a,b] 表示从索引L[a]开始取，到索引L[b],不包括索引L[b]
 L=list(range(100))
 print(L[0:10])  #取前十个数
@@ -147,3 +147,32 @@ def ChangeStrToUpper(L):
 print(ChangeStrToUpper(["hello", "worLd", "HEllo", "PYTHon"]))
 print(ChangeStrToUpper(["I", "Will", "ALWAYS", 18, "years", "OLD"]))
 print(ChangeStrToUpper(["I", "Will", "ALWAYS", "Eighteen", "years", "OLD"]))
+
+# 生成器generator
+# 一边循环一边计算，保存的是算法，每次调用next(g)，就计算出g的下一个元素的值，直到计算到最后一个元素，没有更多的元素时，抛出错误
+# 一般通过for循环来输出,用不到next方法
+print([x*x for x in range(1,11)])
+G=(y*y for y in range(1,11))
+for g in G:
+    print(g)
+'''
+# 著名的斐波拉契数列（Fibonacci）1, 1, 2, 3, 5, 8, 13, 21, 34, 除第一个和第二个数外，任意一个数都可由前两个数相加得到：
+def Fib(max):
+    a = 1
+    b = 1
+    if max == 0:
+        print ("no output!")
+    elif max == 1:
+        print(a)
+    elif max == 2:
+        print(a, b)
+    else:
+        print(a, b)
+        n = 2
+        while n < max:
+            print("n=",n,"a=",a,"b=",b,"a+b=",a+b)
+            a, b = b, a+b    # 注意这个地方有坑
+            n += 1
+
+Fib(6)
+# 再想简化版本的，上面这个太复杂了
