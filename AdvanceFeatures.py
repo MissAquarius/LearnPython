@@ -1,8 +1,8 @@
 # -*- coding:utf-8 -*
 
 from collections import Iterable
+import os
 
-'''
 # 切片L[a,b] 表示从索引L[a]开始取，到索引L[b],不包括索引L[b]
 L=list(range(100))
 print(L[0:10])  #取前十个数
@@ -78,21 +78,22 @@ print(FindMinAndMax([2,8,5,7]))
 
 # 改进版本 接收的list包含非数字元素
 def FindMinAndMax2(L):
+    # 首先遍历list，排除包含非数字的元素
+    for v in L:
+        if (isinstance(v, int) == 0):
+            return ("error")
+    # list全为数字
     if(L==[]):
         return ("None","None")
     else:
+        Max = L[0]
+        Min = L[0]
         for value in L:
-            if(isinstance(value,int)=="False"):
-                break
-                return ("error")
-    Max = L[0]
-    Min = L[0]
-    for value in L:
-        if value > Max:
-            Max = value
-        elif value < Min:
-            Min = value
-    return (Min, Max)
+            if value > Max:
+                Max = value
+            elif value < Min:
+                Min = value
+        return (Min, Max)
 
 
 
@@ -101,10 +102,48 @@ print(FindMinAndMax2([7]))
 print(FindMinAndMax2([7,7]))
 print(FindMinAndMax2([7,1]))
 print(FindMinAndMax2([1,2,8,'kkk']))
-'''
-L=[0,1,'abc']
-for value in L:
-    if isinstance(value,int)=="False":
-        print(value)
 
-print(isinstance('abc',int))
+
+# 是否可以遍历一次，就得到结果？
+# 判断元素是否是int类型的时候，isinstance(v, int) == "False" 为什么不对？因为左边返回的是bool类型的，右边是字符串类型
+if(isinstance('abc',int)==0):
+    print("hahaha")
+if (isinstance('abc', int) == bool("")):
+    print("hahaha2")
+else:
+    print("hahaha3")
+
+# 列表生成式 list Comprehensions
+
+# 要生成1,2,3...10，如何做？
+print(list(range(1,11)))
+# 要生成1*1,2*2,3*3...10*10，如何做？
+L=[]
+for i in range(1,11):
+    L.append(i*i)
+print(L)
+# 循环太繁琐，而列表生成式则可以用一行语句代替循环生成上面的list
+print([x*x for x in range(1,11)])
+print([y*y for y in range(1,11) if y%2 == 0])
+# 两层循环，可以生成全排列
+print([m+n for m in "ABC" for n in "XYZ"])
+# 列出当前目录下的所有文件和目录名
+print([d for d in os.listdir(".")])
+# 把一个list中所有的字符串变成小写
+list2=["HELLO","WoRLD","Hello","PYTHOn"]
+print([s.lower() for s in list2])
+
+
+# 如果list中既包含字符串，又包含整数，由于非字符串类型没有lower()方法，所以列表生成式会报错，因此对上面的字符串转小写进行改进
+
+
+def ChangeStrToUpper(L):
+    for l in L:
+        if (isinstance(l,str))==0:
+            return("Type Error!")
+    return([s2.upper() for s2 in L])
+
+
+print(ChangeStrToUpper(["hello", "worLd", "HEllo", "PYTHon"]))
+print(ChangeStrToUpper(["I", "Will", "ALWAYS", 18, "years", "OLD"]))
+print(ChangeStrToUpper(["I", "Will", "ALWAYS", "Eighteen", "years", "OLD"]))
