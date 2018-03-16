@@ -2,7 +2,7 @@
 
 from collections import Iterable
 import os
-'''
+
 # 切片L[a,b] 表示从索引L[a]开始取，到索引L[b],不包括索引L[b]
 L=list(range(100))
 print(L[0:10])  #取前十个数
@@ -155,7 +155,7 @@ print([x*x for x in range(1,11)])
 G=(y*y for y in range(1,11))
 for g in G:
     print(g)
-'''
+
 # 著名的斐波拉契数列（Fibonacci）1, 1, 2, 3, 5, 8, 13, 21, 34, 除第一个和第二个数外，任意一个数都可由前两个数相加得到：
 def Fib(max):
     a = 1
@@ -176,3 +176,32 @@ def Fib(max):
 
 Fib(6)
 # 再想简化版本的，上面这个太复杂了
+# 没错，我昨晚走在回去的路上就想到了简化版本，
+# 但是今天都有课，下午开会不想弄，为什么晚上这个点来写呢？因为觉得心里很难过，写代码时间会过得比较快
+
+
+def FibEasy(max):
+    if max<= 0:
+        print("please input a number that great than 0!")
+    else:
+        (a,b,n) = (0,1,0)
+        while n < max:
+            print(b)
+            n+=1
+            (a,b)=(b,a+b)
+
+FibEasy(6)
+
+#  将这个函数变成生成器
+def FibEasy2(max):
+    if max<= 0:
+        print("please input a number that great than 0!")
+    else:
+        (a,b,n) = (0,1,0)
+        while n < max:
+            yield b   # 如果一个函数定义中包含yield关键字，那么这个函数就不再是一个普通函数，而是一个generator
+            n+=1
+            (a,b)=(b,a+b)
+FibEasy2(8)
+
+# 生成器在每次调用next()的时候执行，遇到yield语句返回，再次执行时从上次返回的yield语句处继续执行
