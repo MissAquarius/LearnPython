@@ -3,7 +3,7 @@
 from collections import Iterable
 from collections import Iterator
 import os
-'''
+
 # 切片L[a,b] 表示从索引L[a]开始取，到索引L[b],不包括索引L[b]
 L=list(range(100))
 print(L[0:10])  #取前十个数
@@ -232,7 +232,7 @@ def TestGenerator():
 
 tg=TestGenerator()
 print(next(tg))
-'''
+
 
 '''
 杨辉三角定义如下：
