@@ -1,8 +1,9 @@
 # -*- coding:utf-8 -*
 
 from collections import Iterable
+from collections import Iterator
 import os
-
+'''
 # 切片L[a,b] 表示从索引L[a]开始取，到索引L[b],不包括索引L[b]
 L=list(range(100))
 print(L[0:10])  #取前十个数
@@ -152,6 +153,7 @@ print(ChangeStrToUpper(["I", "Will", "ALWAYS", "Eighteen", "years", "OLD"]))
 # 一边循环一边计算，保存的是算法，每次调用next(g)，就计算出g的下一个元素的值，直到计算到最后一个元素，没有更多的元素时，抛出错误
 # 一般通过for循环来输出,用不到next方法
 print([x*x for x in range(1,11)])
+
 G=(y*y for y in range(1,11))
 for g in G:
     print(g)
@@ -192,7 +194,7 @@ def FibEasy(max):
 
 FibEasy(6)
 
-#  将这个函数变成生成器
+#  将函数变成生成器
 def FibEasy2(max):
     if max<= 0:
         print("please input a number that great than 0!")
@@ -202,6 +204,80 @@ def FibEasy2(max):
             yield b   # 如果一个函数定义中包含yield关键字，那么这个函数就不再是一个普通函数，而是一个generator
             n+=1
             (a,b)=(b,a+b)
-FibEasy2(8)
+        return 'done'
+
+for fe in FibEasy2(5):
+    print(fe)
+
+# 拿不到return语句的返回值，如果想要拿到返回值，必须捕获StopIteration错误，返回值包含在StopIteration的value
+fe = FibEasy2(5)
+while True:
+    try:
+        x=next(fe)
+        print(x)
+    except StopIteration as e:
+        print('Generator return value:',e.value)
+        break
 
 # 生成器在每次调用next()的时候执行，遇到yield语句返回，再次执行时从上次返回的yield语句处继续执行
+
+# 测试生成器的执行顺序
+def TestGenerator():
+    print("Step 1")
+    yield (1)
+    print("Step 2")
+    yield (2)
+    print("Step 3")
+    yield (3)
+
+tg=TestGenerator()
+print(next(tg))
+'''
+
+'''
+杨辉三角定义如下：
+
+          1
+         / \
+        1   1
+       / \ / \
+      1   2   1
+     / \ / \ / \
+    1   3   3   1
+   / \ / \ / \ / \
+  1   4   6   4   1
+ / \ / \ / \ / \ / \
+1   5   10  10  5   1
+把每一行看做一个list，试写一个generator，不断输出下一行的list：
+  '''
+# 思路：每一行的首尾元素都是1，中间的元素用生成器生成
+def triangles(n):
+    L,index = [1],0
+    while index<n:
+        yield L
+        index += 1
+        L=[1]+[L[i]+L[i+1] for i in range(len(L)-1)]+[1]
+
+
+for tri in triangles(10):
+    print(tri)
+
+# iterable 与 iterator
+
+print(isinstance([1,2,3],Iterable))
+print(isinstance((),Iterable))
+print(isinstance('abc',Iterable))
+print(isinstance({'name':'gexin','sex':'female'},Iterable))
+
+print(isinstance([1,2,3],Iterator))
+print(isinstance((),Iterator))
+print(isinstance('abc',Iterator))
+print(isinstance({'name':'gexin','sex':'female'},Iterator))
+
+print(isinstance(iter([1,2,3]),Iterator))
+print(isinstance(iter(()),Iterator))
+print(isinstance(iter('abc'),Iterator))
+print(isinstance(iter({'name':'gexin','sex':'female'}),Iterator))
+
+# list,set，string，dict都是iterable,但不是iterator
+# 可以使用iter()函数将其转换为iterator，为什么需要转换呢？因为iterator可以通过next()的方法不断地取下一个值
