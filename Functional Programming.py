@@ -154,7 +154,7 @@ def is_huishu(n):
         return 1
     else:
         return 0
-    
+
 
 print(list(filter(is_huishu, range(50))))
 
