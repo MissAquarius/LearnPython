@@ -1,4 +1,4 @@
-# -*- codding: utf-8 *-
+# -*- coding: utf-8 *-
 
 # 递归函数
 def move(a, b, c, n):
