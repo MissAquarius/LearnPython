@@ -90,10 +90,11 @@ def fn2(x,y):
     return x*0.1+y
 
 
-# 字符串反转
+# 自定义字符串反转函数
+
 def strinverse(s):
-    i=0
-    newstr=''
+    i = 0
+    newstr = ''
     for i in range(len(s)-1):
         newstr += s[len(s)-1-i]
     return newstr
@@ -106,10 +107,54 @@ def str2float1(s):
 
     highnum = int(reduce(fn, map(str2num, highstr)))
     lownum = float(reduce(fn2, map(str2num, lowstr)))
+    # 利用切片实现反转 lownum= float(reduce(fn2, map(str2num, s[-1:index:-1]+'0')))
     return highnum+lownum
+
+
 print(str2float1('123.4567'))
+
 
 # 知识点：
 # 字符串切片（切片L[a,b] 表示从索引L[a]开始取，到索引L[b],不包括索引L[b]）
 # 字符串末尾加一个字符 s+'a'即可
 # 感觉自己是真的笨的很，想的也很麻烦，唉
+# 字符串利用切片实现反转：
+str00="python"
+print(str00[-1:2:-1]) # noh
+
+# filter(),过滤函数，接收一个函数和一个序列
+# filter()把传入的函数依次作用于每个元素，然后根据返回值是True还是False决定保留还是丢弃该元素
+# 过滤掉偶数
+
+
+def is_odd(n):
+    if n % 2 == 1:
+        return 1
+    else:
+        return 0
+
+
+print(list(filter(is_odd, [1, 2, 3, 4, 5, 6])))
+
+# 去除字符串中的空格s.strip()过滤掉首尾空格
+
+
+def is_empty(s):
+    return s and s.strip()
+
+
+print(list(filter(is_empty, ['', '  ', ' a ', 'a', 'b', None])))
+
+# 生成回数
+
+
+def is_huishu(n):
+    s = str(n)
+    if s == s[::-1]:  # 反转
+        return 1
+    else:
+        return 0
+    
+
+print(list(filter(is_huishu, range(50))))
+
