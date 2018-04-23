@@ -158,3 +158,95 @@ def is_huishu(n):
 
 print(list(filter(is_huishu, range(50))))
 
+
+# sorted()排序函数
+#  数值排序
+list=[-1, 3, 2, -5]
+print(sorted(list))
+# 反向排序
+print(sorted(list, reverse=True))
+print(sorted(list, key=abs))
+#  字符串排序，默认是按照ASCII码
+list2=['Orange', 'fruit', 'banana', 'Vegetable', 'Apple']
+print(sorted(list2))
+# 忽略大小写的排序
+print(sorted(list2, key=str.lower))
+
+'''
+假设我们用一组tuple表示学生名字和成绩：
+L = [('Bob', 75), ('Adam', 92), ('Bart', 66), ('Lisa', 88)]
+请用sorted()对上述列表分别按名字和成绩排序：
+'''
+L = [('Bob', 75), ('Adam', 92), ('Bart', 66), ('Lisa', 88)]
+
+
+def by_name(t):
+    return t[0].lower()
+
+
+def by_score(t):
+    return t[1]
+
+
+print(sorted(L, key=by_name))
+print(sorted(L, key=by_score))
+
+#################################################################
+#  返回函数：返回的是一个函数(没完全理解第二个例子)
+def lazy_sum(*args):
+    def sum():
+        total=0
+        for i in args:
+            total += i
+        return total
+    return sum
+
+
+f = lazy_sum(1, 2, 3, 4, 5)
+print(f)
+print(f())
+
+# 返回闭包时牢记一点：返回函数不要引用任何循环变量，或者后续会发生变化的变量
+
+
+def count():
+    fs=[]
+    for i in range(1,4):
+        def f():
+            return i*i
+        fs.append(f)
+    return fs
+
+
+f1, f2, f3 = count()
+print(f1(), f2(), f3())  # 9, 9, 9
+
+# 利用闭包返回一个计数器函数，每次调用它返回递增整数
+def create_counter():
+    def counter(j):
+        def g():
+            return j+1
+        return g
+    fs = []
+    for i in range(1, 4):
+        fs.append(counter(i)) # f(i)立刻被执行，因此i的当前值被传入f()
+    return fs
+
+f1, f2, f3 = create_counter()
+
+print(f1())
+print(f2())
+print(f3())
+'''
+def create_counter():
+    def counter(j):
+        def g():
+            return j+1
+        return g
+    fs = []
+    for i in range(1, 4):
+        fs.append(counter(i))
+    return fs
+counterA=create_counter()
+print(counterA())
+'''
